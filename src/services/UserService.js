@@ -3,15 +3,19 @@ import ApiService from "./ApiService";
 const apiService = new ApiService();
 
 export default class UserService {
-    registerUser(data = {}) {
-        return apiService.doPost('/user/register', data);
+    async registerUser(data = {}) {
+        let {user, token} = await apiService.doPost('/user/register', data);
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', user);
     }
 
-    loginUser(data = {}) {
-        return apiService.doPost('/user/login', data);
+    async loginUser(data = {}) {
+        let {user, token} = await apiService.doPost('/user/login', data);
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', user);
     }
 
-    logoutUser() {
-        apiService.doPost('/user/logout');
+    async logoutUser() {
+        await apiService.doPost('/user/logout');
     }
 }

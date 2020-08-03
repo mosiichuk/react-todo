@@ -1,21 +1,28 @@
+import { AppBar, makeStyles, Button, Typography, Toolbar } from '@material-ui/core/';
 import React from 'react';
-import { Container, Button, Grid } from '@material-ui/core/';
-import Title from './components/Title';
-import Section from './components/section/Section';
-import AuthenticationOptions from './components/authenticationOptions/AuthenticationOptions';
+import {
+  BrowserRouter as Router,
+  Route, Switch, Link
+} from "react-router-dom";
+import AuthenticationOptionsPage from './pages/AuthenticationOptionsPage';
+import MenuBar from './components/MenuBar/MenuBar';
+import HelloPage from './pages/HelloPage';
+import './App.css'
 
 function App() {
 
   return (
-    <Section name="main">
-      <Container fixed>
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <AuthenticationOptions />
-          </Grid>
-        </Grid>
-      </Container>
-    </Section>
+    <Router>
+      <MenuBar />
+      <Switch>
+        <Route exact path="/">
+          <HelloPage />
+        </Route>
+        <Route path="/login">
+          <AuthenticationOptionsPage />
+        </Route>
+      </Switch>
+    </Router >
   );
 }
 

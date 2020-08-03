@@ -2,6 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TextField, Button, FormGroup, FormHelperText, Box } from '@material-ui/core';
+import UserService from '../../services/UserService';
 
 const initialValues = {
     email: "",
@@ -16,10 +17,9 @@ const validationSchema = Yup.object({
         .required("Required"),
 });
 
-export default function LoginForm() {
-    function loginCustomer(formData) {
+const userService = new UserService();
 
-    }
+export default function LoginForm() {
     
     return (
         <>
@@ -28,7 +28,7 @@ export default function LoginForm() {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => { 
-                    console.log(JSON.stringify(values, null, 4)) 
+                    userService.loginUser(values);
                 }}
             >
                 {({ values, errors, isSubmitting, isValidating, touched}) => (

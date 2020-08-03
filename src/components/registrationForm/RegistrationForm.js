@@ -2,16 +2,19 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TextField, Button, FormGroup, FormHelperText, Box } from '@material-ui/core';
+import UserService from '../../services/UserService';
+
+const userService = new UserService();
 
 const initialValues = {
-    firstName: "",
+    name: "",
     email: "",
     password: "",
     acceptedTerms: false,
 };
 
 const validationSchema = Yup.object({
-    firstName: Yup.string()
+    name: Yup.string()
         .max(15, "Must be 15 characters or less")
         .required("Required"),
     email: Yup.string()
@@ -38,7 +41,10 @@ export default function RegistrationForm() {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values) => { console.log(JSON.stringify(values, null, 4)) }}
+                onSubmit={(values) => {
+                    userService.registerUser(values);
+                    console.log(JSON.stringify(values, null, 4));
+                }}
             >
                 {({ values, errors, isSubmitting, isValidating, touched}) => (
                     <Form>
@@ -46,11 +52,11 @@ export default function RegistrationForm() {
                             <FormGroup>
                                 <Field
                                     as={TextField}
-                                    name="firstName"
+                                    name="name"
                                     label="First Name"
-                                    error={touched.firstName && !!errors.firstName}
+                                    error={touched.name && !!errors.name}
                                 />
-                                <ErrorMessage component={FormHelperText} name="firstName" error/>
+                                <ErrorMessage component={FormHelperText} name="name" error/>
                             </FormGroup>
 
                             <FormGroup>
