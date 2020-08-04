@@ -2,7 +2,7 @@ import { AppBar, makeStyles, Button, Typography, Toolbar } from '@material-ui/co
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Route, Switch, Link
+  Route, Switch, useRouteMatch
 } from "react-router-dom";
 import AuthenticationOptionsPage from './pages/AuthenticationOptionsPage';
 import MenuBar from './components/MenuBar/MenuBar';
@@ -12,7 +12,7 @@ import './App.css'
 function App() {
 
   return (
-    <Router>
+    <Router basename="/react-todo/">
       <MenuBar />
       <Switch>
         <Route exact path="/">

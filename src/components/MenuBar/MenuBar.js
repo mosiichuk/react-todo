@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { Link } from "react-router-dom";
 import './ManuBar.css';
-import LoginButton from '../LoginButton/LoginButton';
+import AuthButton from '../AuthButton/AuthButton';
 
 export default function MenuBar() {
 
@@ -22,7 +22,7 @@ export default function MenuBar() {
             </Typography>
           </Link>
 
-          <LoginButton/>
+          <AuthButton isLoggedIn={localStorage.getItem('token') && localStorage.getItem('user')}/>
         </Toolbar>
       </Container>
     </AppBar>
