@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { TextField, Button, FormGroup, FormHelperText, Box } from '@material-ui/core';
 import UserService from '../../services/UserService';
+import { withRouter } from 'react-router-dom';
 
 const initialValues = {
     email: "",
@@ -11,7 +12,7 @@ const initialValues = {
 
 const validationSchema = Yup.object({
     email: Yup.string()
-        .email("Invalid email addresss")
+        .email("Invalid email address")
         .required("Required"),
     password: Yup.string()
         .required("Required"),
@@ -19,7 +20,7 @@ const validationSchema = Yup.object({
 
 const userService = new UserService();
 
-export default function LoginForm() {
+const LoginForm = ({history, changeLoggedIn}) => {
     
     return (
         <>
@@ -27,8 +28,11 @@ export default function LoginForm() {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values) => { 
-                    userService.loginUser(values);
+                onSubmit={async (values, {setSubmitting}) => { 
+                    await userService.loginUser(values);
+                    setSubmitting(true);
+                    changeLoggedIn(true);
+                    history.push('/');
                 }}
             >
                 {({ values, errors, isSubmitting, isValidating, touched}) => (
@@ -68,3 +72,5 @@ export default function LoginForm() {
         </>
     );
 }
+
+export default withRouter(LoginForm);

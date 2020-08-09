@@ -16,6 +16,11 @@ export default class UserService {
     }
 
     async logoutUser() {
-        await apiService.doPost('/user/logout');
+        let response = await apiService.doPost('/user/logout');
+        
+        if (response.success) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
     }
 }

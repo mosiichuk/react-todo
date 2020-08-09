@@ -1,6 +1,6 @@
 import { Container } from '@material-ui/core/';
 import React from 'react';
-import logo from '../logo.svg';
+import logo from '../assets//logo.svg';
 
 export default function HelloPage() {
 

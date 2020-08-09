@@ -1,21 +1,35 @@
 import { Button } from '@material-ui/core/';
 import React from 'react';
 import { Link } from "react-router-dom";
+import UserService from '../../services/UserService';
 
-export default function AuthButton(props) {
+const userService = new UserService();
+
+export default function AuthButton({ isLoggedIn, changeLoggedIn }) {
+    let authButton;
+
+    let logout = async () => {
+        await userService.logoutUser();
+        changeLoggedIn(false);
+    }
+
+    if (isLoggedIn) {
+        authButton = (
+            <Link to='/' onClick={logout}>
+                <Button color="inherit">Logout</Button>
+            </Link>
+        );
+    } else {
+        authButton = (
+            <Link to='/login'>
+                <Button color="inherit">Login</Button>
+            </Link>
+        );
+    }
 
     return (
         <>
-            {!props.isLoggedIn &&
-                <Link to='/login'>
-                    <Button color="inherit">Login</Button>
-                </Link>
-            }
-            {props.isLoggedIn &&
-                <Link to='/logout'>
-                    <Button color="inherit">Logout</Button>
-                </Link>
-            }
+            {authButton}
         </>
     );
 };

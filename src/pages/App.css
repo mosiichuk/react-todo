@@ -19,6 +19,9 @@
   color: black;
 }
 
+h1 {
+  color: #000;
+}
 
 @keyframes App-logo-spin {
   from {

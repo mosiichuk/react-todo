@@ -1,16 +1,15 @@
 import {
   AppBar,
-  Button,
   Typography,
   Toolbar,
   Container
 } from '@material-ui/core/';
 import React from 'react';
 import { Link } from "react-router-dom";
-import './ManuBar.css';
-import AuthButton from '../AuthButton/AuthButton';
+import './MenuBar.css';
+import AuthButton from '../authButton/AuthButton';
 
-export default function MenuBar() {
+const MenuBar = ({isLoggedIn, changeLoggedIn}) => {
 
   return (
     <AppBar position="static" >
@@ -22,9 +21,11 @@ export default function MenuBar() {
             </Typography>
           </Link>
 
-          <AuthButton isLoggedIn={localStorage.getItem('token') && localStorage.getItem('user')}/>
+          <AuthButton changeLoggedIn={changeLoggedIn} isLoggedIn={isLoggedIn}/>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
+
+export default MenuBar;

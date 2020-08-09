@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AuthenticationOptions() {
+export default function AuthenticationOptions({changeLoggedIn}) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -52,16 +52,16 @@ export default function AuthenticationOptions() {
     return (
         <div className={classes.root}>
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} centered aria-label="simple tabs example">
+                <Tabs value={value} onChange={handleChange} centered>
                     <Tab label="Login" />
                     <Tab label="Register" />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <LoginForm/>
+                <LoginForm changeLoggedIn={changeLoggedIn}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <RegistrationForm/>
+                <RegistrationForm changeLoggedIn={changeLoggedIn}/>
             </TabPanel>
         </div>
     );

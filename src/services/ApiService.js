@@ -1,6 +1,5 @@
 const TODO_API_ENDPOINT = 'https://api-nodejs-todolist.herokuapp.com';
 
-
 function getEndpointUrl(url = '') {
     return TODO_API_ENDPOINT + url;
 }
@@ -18,6 +17,7 @@ function getHeaders(hasBody = false) {
     };
 
 }
+
 export default class ApiService {
 
     async doGet(url = '') {
