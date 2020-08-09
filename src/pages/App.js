@@ -4,6 +4,7 @@ import {
   Route, Switch
 } from "react-router-dom";
 import AuthenticationOptionsPage from './AuthenticationOptionsPage';
+import TasksPage from './TasksPage';
 import MenuBar from '../components/menuBar/MenuBar';
 import HelloPage from './HelloPage';
 import './App.css'
@@ -17,7 +18,8 @@ function App() {
       
       <Switch>
         <Route exact path="/">
-          <HelloPage />
+          {!isLoggedIn && <HelloPage/>}
+          {isLoggedIn && <TasksPage/>}
         </Route>
         <Route path="/login">
           <AuthenticationOptionsPage changeLoggedIn={setIsLoggedIn}/>

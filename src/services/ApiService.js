@@ -15,7 +15,6 @@ function getHeaders(hasBody = false) {
         'Content-Type': contentType,
         'Authorization': bearerToken,
     };
-
 }
 
 export default class ApiService {

@@ -3,19 +3,19 @@ import ApiService from "./ApiService";
 const apiService = new ApiService();
 
 export default class TaskService {
-    getAllTasks() {
-        return apiService.doGet('/task');
+    async getAllTasks() {
+        return await apiService.doGet('/task');
     }
 
-    addTask(data = {}) {
-        return apiService.doPost('/task', data);
+    async addTask(data = {}) {
+        return await apiService.doPost('/task', data);
     }
 
-    updateTask(id, data = {}) {
-        return apiService.doPut(`/task/${id}`, data);
+    async updateTask(id, data = {}) {
+        return await apiService.doPut(`/task/${id}`, data);
     }
 
-    deleteTask(id) {
-        apiService.doDelete(`/task/${id}`);
+    async deleteTask(id) {
+        return await apiService.doDelete(`/task/${id}`);
     }
 }
