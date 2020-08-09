@@ -1,6 +1,9 @@
 body {
   font-family: Roboto;
-  color: #fff;
+}
+
+.termsAndConditionsCheckbox {
+  margin-right: 5%;
 }
 
 * {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Checkbox, Grid, Card, CardContent, IconButton, CardActions, FormControl, InputLabel, Input, Button } from '@material-ui/core';
+import { Checkbox, Grid, Card, CardContent, IconButton, CardActions, FormControl, InputLabel, Input, Button, Fab } from '@material-ui/core';
 import TaskService from '../../services/TaskService';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import './Task.css';
+import CheckIcon from '@material-ui/icons/Check';
 
 const taskService = new TaskService();
 
@@ -65,9 +66,9 @@ const Task = ({ completed, description, id, changeTaskList }) => {
                                     <InputLabel htmlFor="my-input">Add new task</InputLabel>
                                     <Input value={updatedDescInputValue} onChange={updateDescInputValue}/>
                                 </FormControl>
-                                <Button variant="contained" type="submit" color="primary">
-                                    Update
-                                </Button>
+                                <Fab color="primary" type="submit" aria-label="add" size="small">
+                                    <CheckIcon/>
+                                </Fab>
                             </form>
                         }
                         <IconButton aria-label="delete" onClick={deleteTask}>

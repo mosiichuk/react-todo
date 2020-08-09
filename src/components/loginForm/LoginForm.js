@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { TextField, Button, FormGroup, FormHelperText, Box } from '@material-ui/core';
+import { TextField, Button, FormGroup, FormHelperText, Box, Backdrop, CircularProgress, makeStyles, Dialog, DialogTitle } from '@material-ui/core';
 import UserService from '../../services/UserService';
 import { withRouter } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+}));
 
 const initialValues = {
     email: "",
@@ -21,6 +28,27 @@ const validationSchema = Yup.object({
 const userService = new UserService();
 
 const LoginForm = ({history, changeLoggedIn}) => {
+    const [open, setOpen] = useState(false);
+
+    const classes = useStyles();
+
+    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+
+    const loginUser = async (values, { setSubmitting }) => {
+        setOpen(true);
+
+        try {
+            await userService.loginUser(values);
+            setSubmitting(true);
+            changeLoggedIn(true);
+            history.push('/');
+         } catch (e) {
+            setSubmitting(true);
+            setOpen(false);
+            console.error(e.message, e.name);
+            setErrorDialogOpen(true);
+         }
+    }
     
     return (
         <>
@@ -28,12 +56,7 @@ const LoginForm = ({history, changeLoggedIn}) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async (values, {setSubmitting}) => { 
-                    await userService.loginUser(values);
-                    setSubmitting(true);
-                    changeLoggedIn(true);
-                    history.push('/');
-                }}
+                onSubmit={loginUser}
             >
                 {({ values, errors, isSubmitting, isValidating, touched}) => (
                     <Form>
@@ -64,11 +87,17 @@ const LoginForm = ({history, changeLoggedIn}) => {
                         <Button variant="contained" color="primary" type="submit" disabled={isSubmitting || isValidating}>
                             Submit
                         </Button>
-                        {/* <pre>{JSON.stringify(values, null, 4)}</pre>
-                        <pre>{JSON.stringify(errors, null, 4)}</pre> */}
                     </Form>
                 )}
             </Formik>
+            
+            <Backdrop className={classes.backdrop} open={open}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+
+            <Dialog onClose={() => setErrorDialogOpen(false)} aria-labelledby="simple-dialog-title" open={errorDialogOpen}>
+                <DialogTitle id="simple-dialog-title">Email or password is incorrect.</DialogTitle>
+            </Dialog>
         </>
     );
 }

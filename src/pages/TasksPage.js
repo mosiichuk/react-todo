@@ -1,15 +1,17 @@
-import { Container, FormControl, InputLabel, Input, Button, Grid, Card, CardContent } from '@material-ui/core/';
+import { Container, FormControl, InputLabel, Input, Grid, Fab, Typography, Box } from '@material-ui/core/';
 import React, { useEffect } from 'react';
 import TaskService from '../services/TaskService'
 import { useState } from 'react';
 import Task from '../components/task/Task';
+import AddIcon from '@material-ui/icons/Add';
 
 const taskService = new TaskService();
 
 const TasksPage = () => {
     const [tasks, setTasks] = useState([]);
     const [taskDesc, setTaskDesc] = useState('');
-    const [query, setQuery] = useState('');
+
+    const userName = JSON.parse(localStorage.getItem('user')).name;
 
     useEffect(() => {
         getTasks();
@@ -17,7 +19,6 @@ const TasksPage = () => {
 
     const getTasks = async () => {
         let tasksResponse = await taskService.getAllTasks();
-        console.log(tasksResponse.data);
         setTasks(tasksResponse.data);
     }
 
@@ -44,19 +45,29 @@ const TasksPage = () => {
     
     return (
         <Container>
-            <div className="App">
-                <h1>Todo list</h1>
-            </div>
+            <Box mt={3} mb={3}>
+                <Typography variant="h4" align="center">
+                    Hi {userName}, here is your To-Do list
+                </Typography>
+            </Box>
 
-            <form onSubmit={addTask}>
-                <FormControl>
-                    <InputLabel htmlFor="my-input">Add new task</InputLabel>
-                    <Input value={taskDesc} onChange={updateTaskDesc} />
-                </FormControl>
-                <Button variant="contained" type="submit" color="primary">
-                    Add
-                </Button>
-            </form>
+            <Box mt={3} mb={3}>
+                <form onSubmit={addTask}>
+                    <Grid 
+                        container
+                        direction="row"
+                        alignItems="center"
+                    >
+                        <FormControl>
+                            <InputLabel htmlFor="my-input">Add new task</InputLabel>
+                            <Input value={taskDesc} onChange={updateTaskDesc} />
+                        </FormControl>
+                        <Fab color="primary" type="submit" aria-label="add" size="small">
+                                <AddIcon />
+                        </Fab>
+                    </Grid>
+                </form>
+            </Box>
             <Grid container justify="center" spacing={3}>
                 {tasks.map(task => (
                     <Task

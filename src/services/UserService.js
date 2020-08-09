@@ -6,13 +6,13 @@ export default class UserService {
     async registerUser(data = {}) {
         let {user, token} = await apiService.doPost('/user/register', data);
         localStorage.setItem('token', token);
-        localStorage.setItem('user', user);
+        localStorage.setItem('user', JSON.stringify(user));
     }
 
     async loginUser(data = {}) {
         let {user, token} = await apiService.doPost('/user/login', data);
         localStorage.setItem('token', token);
-        localStorage.setItem('user', user);
+        localStorage.setItem('user', JSON.stringify(user));
     }
 
     async logoutUser() {

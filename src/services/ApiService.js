@@ -24,6 +24,10 @@ export default class ApiService {
             headers: getHeaders(),
         });
 
+        if (response.status >= 400) {
+            throw new Error(`Error during request. Url: ${url}`);
+        }
+
         return await response.json();
     }
 
@@ -34,6 +38,10 @@ export default class ApiService {
             body: JSON.stringify(data)
         });
 
+        if (response.status >= 400) {
+            throw new Error(`Error during request. Url: ${url}, data: ${data}`);
+        }
+
         return await response.json();
     }
 
@@ -42,6 +50,10 @@ export default class ApiService {
             method: 'DELETE',
             headers: getHeaders(),
         });
+
+        if (response.status >= 400) {
+            throw new Error(`Error during request. Url: ${url}}`);
+        }
 
         return await response.json();
     }
@@ -52,6 +64,10 @@ export default class ApiService {
             headers: getHeaders(true),
             body: JSON.stringify(data)
         });
+
+        if (response.status >= 400) {
+            throw new Error(`Error during request. Url: ${url}, data: ${data}`);
+        }
 
         return await response.json();
     }
